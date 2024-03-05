@@ -1,0 +1,53 @@
+﻿@model DataAccess.ApplicationContext.Product
+
+@{
+    ViewData["Title"] = "Delete Product";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Delete Product Confirmation for<b>  @Model.Name</b></h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Delete">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" readonly />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProductCode" class="control-label"></label>
+                        <input asp-for="ProductCode" class="form-control" readonly />
+                        <span asp-validation-for="ProductCode" class="text-danger"></span>
+                    </div>
+                     <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" readonly />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CategoryName" class="control-label"></label>
+                        <input asp-for="CategoryName" class="form-control" readonly />
+                        <span asp-validation-for="CategoryName" class="text-danger"></span>
+                    </div>
+                     <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" readonly />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group  mb-3">
+                        <img src="/images/@Model.Image" style="width:100px;height:100px;" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Delete" class="float-right btn btn-danger " asp-action="DeleteConfirmed" asp-route-id="@Model.Id" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

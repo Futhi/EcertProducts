@@ -1,0 +1,138 @@
+﻿@using BusinessLogic.Models
+@using BusinessLogic.Common
+@model PaginatedList<DataAccess.ApplicationContext.Product>
+
+@{
+    ViewData["Title"] = "List of Products";
+
+    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.NextPage ? "disabled" : "";
+}
+
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+            <a class="btn btn-info" href="@Url.Action("DownloadExcel","Product")">Download as excel</a>
+            <form method="post" asp-action="UploadFile" enctype="multipart/form-data">
+                <div class="mb-2">
+                    <label for="fileToUpload" class="form-label">
+                        Select File to Upload
+                    </label>
+                    <input id="fileToUpload" name="fileToUpload"
+                           type="file" class="d-none" />
+                    <div class="input-group">
+                        <button class="input-group-text btn btn-success"
+                                type="button"
+                                onclick="selectFileClick();">
+                            Select a File
+                        </button>
+                        <input id="fileDisplay" type="text"
+                               class="form-control" readonly="readonly"
+                               onclick="selectFileClick();" />
+                        <div class="input-group-text" onclick="selectFileClick();">
+                            <i class="fa-regular fa-folder-open"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 form-group">
+                    <button class="btn btn-primary">Upload</button>
+                </div>
+            </form>
+    </div>
+    <div class="col-6"> @*div number 2*@
+            <div class="col-md-8 offset-md-2">
+                
+                <table class="table table-striped">
+                    <h1>List of Products</h1>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Product Code</th>
+                            <th>Description</th>
+                            <th>Category Name</th>
+                            <th>Price</th>
+                            <th>Image Name</th>
+                            <th>UpdateDated</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.ProductCode)
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.CategoryName)
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </td>
+                                <td class="align-middle">
+                                    <img src="../images/@Html.DisplayFor(modelItem => item.Image)" style="width:100px;height:100px;" />
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.UpdateDate)
+                                </td>
+                                <td class="align-middle d-flex">
+                                    <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-eye"></i>Edit</a> |
+                                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i>Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+               
+
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex -1)" class="btn btn-default @prevDisabled">
+                        Previous
+                    </a>
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex +1)" class="btn btn-default @nextDisabled">
+                        Next
+                    </a>
+               
+
+            </div>
+    </div>
+    <div class="col-1">
+      
+    </div>
+  </div>
+</div>
+<div class="row">
+    
+</div>
+
+
+
+
+@section Scripts {
+  <script>
+    $(document).on('change', ':file', function (e) {
+      console.log('in change');
+      $("#fileDisplay").val(e.target.value);
+    });
+
+    function selectFileClick() {
+      console.log('in trigger');
+      $("#fileToUpload").trigger("click");
+    }
+  </script>
+}
+
+
+<script>
+    await window.open('/Product/DownloadExcel', 'DownloadWindowName');
+</script>

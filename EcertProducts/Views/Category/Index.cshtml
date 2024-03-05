@@ -1,0 +1,54 @@
+﻿@model IEnumerable<DataAccess.ApplicationContext.Category>
+
+@{
+    ViewData["Title"] = "List of Categories";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Id)</th>
+                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.IsActive)</th>
+                    <th>@Html.DisplayNameFor(model => model.CategoryCode)</th>
+                    <th>@Html.DisplayNameFor(model => model.UpdateDate)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.IsActive)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.CategoryCode)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.UpdateDate)
+                        </td>                       
+                        <td class="align-middle d-flex">
+                            <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-eye"></i>Edit</a>  |
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i>Delete</a>  
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    window.open('/Customer/GenerateXML', 'DownloadWindowName');
+
+</script>
